@@ -1,0 +1,36 @@
+@startuml
+'logical_view_credit_scoring'
+left to right direction
+skinparam monochrome true
+skinparam handwritten false
+hide class circle
+skinparam shadowing false
+
+class Client {
+    +id: int
+    +name: str
+    +credit_history: str
+}
+
+class CreditApplication {
+    +id: int
+    +client_id: int
+    +amount: float
+    +status: str
+}
+
+class CreditScoringModel {
+    +model_id: int
+    +model_type: str
+    +evaluate(client: Client, application: CreditApplication): float
+}
+
+class CreditDecisionEngine {
+    +make_decision(application: CreditApplication, score: float): str
+}
+
+Client "1" -- "0..*" CreditApplication : applies >
+CreditApplication "1" -- "1" CreditScoringModel : evaluated by >
+CreditScoringModel "1" -- "1" CreditDecisionEngine : decides >
+
+@enduml
