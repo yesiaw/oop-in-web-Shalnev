@@ -1,0 +1,40 @@
+@startuml
+'logical_view_1'
+
+left to right direction
+skinparam monochrome true
+skinparam handwritten false
+hide class circle
+skinparam shadowing false
+
+class "Набор данных" as DataSet {
+    "Название": str
+    "Дата создания": datetime
+    "Дата тестирования": datetime
+    k: int
+}
+
+class "List[Данные о клиенте]"
+
+class "Данные о клиенте" as DataFrame {
+    "Удалось ли выплатить кредит": bool
+    "Стаж работы (лет)": int
+    "Тип домовладения": int
+    "Срок кредитования (месяцев)": int
+    "Возраст (лет)": int
+    "Семейное положение": int
+    "Есть ли предыдущие кредиты": bool
+    "Тип работы": int
+    "Расходы (в месяц)": float
+    "Доходы (в месяц)": float
+    "Общая стоимость всех активов": float
+    "Сумма кредитной задолженности": float
+    "Запрашиваемая сумма кредита": float
+    "Цена товара, который клиент хочет купить": float
+}
+
+DataSet *--> "List[Данные о клиенте]" : Тренировочный набор >
+DataSet *--> "List[Данные о клиенте]" : Тестовый набор >
+"List[Данные о клиенте]" o--> DataFrame
+
+@enduml

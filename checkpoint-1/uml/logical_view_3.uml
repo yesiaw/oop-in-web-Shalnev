@@ -1,0 +1,72 @@
+@startuml
+'logical_view_3'
+
+skinparam monochrome true
+skinparam handwritten false
+hide class circle
+skinparam shadowing false
+
+class "Данные о клиенте" as Sample {
+    "Стаж работы (лет)": int
+    "Тип домовладения": int
+    "Срок кредитования (месяцев)": int
+    "Возраст (лет)": int
+    "Семейное положение": int
+    "Есть ли предыдущие кредиты": bool
+    "Тип работы": int
+    "Расходы (в месяц)": float
+    "Доходы (в месяц)": float
+    "Общая стоимость всех активов": float
+    "Сумма кредитной задолженности": float
+    "Запрашиваемая сумма кредита": float
+    "Цена товара, который клиент хочет купить": float
+}
+
+class "Данные о новом клиенте" as UnknownSample {
+}
+
+class "Данные о старом клиенте" as KnownSample {
+    "Удалось ли выплатить кредит": bool
+}
+
+class "Тестовые данные о клиенте" as TestSample {
+    "Прогноз выплаты кредита": bool | None
+}
+
+class "Обучающие данные о клиенте" as TrainSample {
+}
+
+class "Предсказанные данные о клиенте" as ClassifiedSample {
+    "Прогноз выплаты кредита": bool
+}
+
+class Hyperparameter {
+    k: int
+    quality: float
+}
+
+class "Набор данных" as DataSet {
+    "Название": str
+    "Дата создания": datetime
+    "Дата тестирования": datetime
+}
+class "List[TrainSample]"
+class "List[TestSample]"
+class "List[Hyperparameter]"
+
+DataSet o--> "List[TrainSample]" : Тренировочный набор
+DataSet o--> "List[TestSample]" : Тестовый набор
+DataSet o--> "List[Hyperparameter]" : Регулировка
+
+"List[TrainSample]" o--> TrainSample
+"List[TestSample]" o--> TestSample
+"List[Hyperparameter]" *--> Hyperparameter
+
+Sample <|-- UnknownSample
+Sample <|-- KnownSample
+UnknownSample <|-- ClassifiedSample
+KnownSample <|-- TestSample
+KnownSample <|-- TrainSample
+
+Hyperparameter ...> DataSet : Данные >
+@enduml

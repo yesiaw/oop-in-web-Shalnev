@@ -1,0 +1,2 @@
+[run]
+omit = check-2/*,tests.py,conftest.py,app.py
